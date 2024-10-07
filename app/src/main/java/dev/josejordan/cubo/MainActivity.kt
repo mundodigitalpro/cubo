@@ -1,5 +1,4 @@
 package dev.josejordan.cubo
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -27,7 +26,7 @@ class MainActivity : ComponentActivity() {
 fun RotatingCube() {
     var rotationX by remember { mutableStateOf(0f) }
     var rotationY by remember { mutableStateOf(0f) }
-    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val infiniteTransition = rememberInfiniteTransition()
 
     rotationX = infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -35,7 +34,7 @@ fun RotatingCube() {
         animationSpec = infiniteRepeatable(
             animation = tween(6000, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
-        ), label = ""
+        )
     ).value
 
     rotationY = infiniteTransition.animateFloat(
@@ -44,7 +43,7 @@ fun RotatingCube() {
         animationSpec = infiniteRepeatable(
             animation = tween(8000, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
-        ), label = ""
+        )
     ).value
 
     Canvas(modifier = Modifier.fillMaxSize()) {
@@ -60,22 +59,49 @@ fun RotatingCube() {
         ).map { it.rotateX(rotationX).rotateY(rotationY) }
             .map { Offset(it.x * cubeSize + centerX, it.y * cubeSize + centerY) }
 
-        // Dibuja las aristas del cubo
+        // Define colors for each face
+        val faceColors = listOf(
+            Color.Red, Color.Green, Color.Blue,
+            Color.Yellow, Color.Cyan, Color.Magenta
+        )
+
+        // Draw faces
+        drawFace(points[0], points[1], points[2], points[3], faceColors[0])
+        drawFace(points[4], points[5], points[6], points[7], faceColors[1])
+        drawFace(points[0], points[1], points[5], points[4], faceColors[2])
+        drawFace(points[2], points[3], points[7], points[6], faceColors[3])
+        drawFace(points[0], points[3], points[7], points[4], faceColors[4])
+        drawFace(points[1], points[2], points[6], points[5], faceColors[5])
+
+        // Draw edges
         val edges = listOf(
-            0 to 1, 1 to 2, 2 to 3, 3 to 0, // cara frontal
-            4 to 5, 5 to 6, 6 to 7, 7 to 4, // cara trasera
-            0 to 4, 1 to 5, 2 to 6, 3 to 7  // conexiones
+            0 to 1, 1 to 2, 2 to 3, 3 to 0,
+            4 to 5, 5 to 6, 6 to 7, 7 to 4,
+            0 to 4, 1 to 5, 2 to 6, 3 to 7
         )
 
         edges.forEach { (start, end) ->
             drawLine(
-                Color.Blue,
+                Color.Black,
                 points[start],
                 points[end],
-                strokeWidth = 5f
+                strokeWidth = 3f
             )
         }
     }
+}
+
+fun DrawScope.drawFace(p1: Offset, p2: Offset, p3: Offset, p4: Offset, color: Color) {
+    drawPath(
+        path = androidx.compose.ui.graphics.Path().apply {
+            moveTo(p1.x, p1.y)
+            lineTo(p2.x, p2.y)
+            lineTo(p3.x, p3.y)
+            lineTo(p4.x, p4.y)
+            close()
+        },
+        color = color.copy(alpha = 0.7f)
+    )
 }
 
 data class Point3D(val x: Float, val y: Float, val z: Float) {
