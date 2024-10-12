@@ -28,13 +28,7 @@ The app will display a simple rotating 3D cube that changes its rotation along t
 
 ## 🖼️ Screenshots
 
-![Rotating Cube](https://your-image-url.com/screenshot.png)
-
-## 📹 Video Demo
-
-Watch the rotating cube in action by downloading the video directly from this repository:
-
-- [Download Demo Video](./cubo.mp4)
+![Rotating Cube Demo](./cubo.gif)
 
 ## 📄 Code Overview
 
@@ -65,4 +59,5 @@ Contributions are welcome! Feel free to fork the repository and submit a pull re
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 
