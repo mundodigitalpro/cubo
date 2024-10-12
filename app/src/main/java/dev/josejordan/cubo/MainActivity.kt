@@ -24,9 +24,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun RotatingCube() {
-    var rotationX by remember { mutableStateOf(0f) }
-    var rotationY by remember { mutableStateOf(0f) }
-    val infiniteTransition = rememberInfiniteTransition()
+    var rotationX by remember { mutableFloatStateOf(0f) }
+    var rotationY by remember { mutableFloatStateOf(0f) }
+    val infiniteTransition = rememberInfiniteTransition(label = "")
 
     rotationX = infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -34,7 +34,7 @@ fun RotatingCube() {
         animationSpec = infiniteRepeatable(
             animation = tween(6000, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
-        )
+        ), label = ""
     ).value
 
     rotationY = infiniteTransition.animateFloat(
@@ -43,7 +43,7 @@ fun RotatingCube() {
         animationSpec = infiniteRepeatable(
             animation = tween(8000, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
-        )
+        ), label = ""
     ).value
 
     Canvas(modifier = Modifier.fillMaxSize()) {
