@@ -30,6 +30,12 @@ The app will display a simple rotating 3D cube that changes its rotation along t
 
 ![Rotating Cube](https://your-image-url.com/screenshot.png)
 
+## 📹 Video Demo
+
+Watch the rotating cube in action by downloading the video directly from this repository:
+
+- [Download Demo Video](./cubo.mp4)
+
 ## 📄 Code Overview
 
 - **`MainActivity.kt`**: The entry point of the app where the cube is rendered using Jetpack Compose.
@@ -59,3 +65,4 @@ Contributions are welcome! Feel free to fork the repository and submit a pull re
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
